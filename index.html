@@ -1,0 +1,1185 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThriftStyle | Toko Baju Thrift UMKM Berkualitas</title>
+    <meta name="description" content="Toko thrift baju berkualitas dengan harga terjangkau. Temukan berbagai macam pakaian vintage dan preloved dalam kondisi baik.">
+    <meta name="keywords" content="thrift, baju second, pakaian bekas, fashion murah, UMKM thrift">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6f7f;
+            --secondary-color: #d9b48f;
+            --accent-color: #e85a4f;
+            --light-color: #f8f5f2;
+            --dark-color: #333;
+            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .search-bar {
+            display: flex;
+            flex: 0.6;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 0 1rem;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            position: relative;
+            margin-left: 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+        }
+
+        .submenu li {
+            margin: 0;
+        }
+
+        .submenu li a {
+            color: var(--dark-color);
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .submenu li:last-child a {
+            border-bottom: none;
+        }
+
+        nav ul li:hover .submenu {
+            display: block;
+        }
+
+        .cart-icon {
+            position: relative;
+            margin-left: 1rem;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Hero Slider */
+        .hero {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            width: 33.33%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            text-align: center;
+            color: white;
+            background-color: rgba(0,0,0,0.5);
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .slide-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .slide-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+
+        .slider-control {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .slider-control.active {
+            background-color: white;
+        }
+
+        /* Running Text */
+        .marquee {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 0.8rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Featured Products */
+        .section-title {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .product-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.6rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .product-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* About Section */
+        .about {
+            padding: 3rem 0;
+            background-color: white;
+            margin: 3rem 0;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .social-media {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-media a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-media a:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 3rem 0;
+            background-color: #f5f5f5;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .contact-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .payment-methods {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .payment-methods img {
+            width: 50px;
+            height: auto;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-cart {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        .cart-items {
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            margin-right: 1rem;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-remove {
+            color: var(--dark-color);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            font-weight: 700;
+            margin: 1rem 0;
+            text-align: right;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            .hero {
+                height: 350px;
+            }
+
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .cart-modal {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .submenu {
+                position: static;
+                box-shadow: none;
+                background-color: transparent;
+            }
+
+            .submenu li a {
+                color: white;
+            }
+
+            .slide-content {
+                padding: 1rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">good<span>vibs</span></a>
+            
+            <!-- Search Bar -->
+<!-- Search Bar -->
+<input type="text" id="search" placeholder="Cari produk..." style="padding: 10px; width: 300px; font-size: 16px; margin-bottom: 20px;">
+<!-- Hasil Produk -->
+<div id="productList"></div>
+
+
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Beranda</a></li>
+                    <li>
+                        <a href="#">Kategori</a>
+                        <ul class="submenu">
+                            <li><a href="#">Pria</a></li>
+                            <li><a href="#">Wanita</a></li>
+                            <li><a href="#">Anak</a></li>
+                            <li><a href="#">Aksesoris</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#about">Tentang Kami</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                    <li>
+                        <a href="#" class="cart-icon" id="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero">
+        <div class="slider">
+            <div class="slide" style="background-image: url('https://placehold.co/1920x1080/f5f5f2/4a6f7f?text=Fashion+Thrift+Terbaik')">
+                <div class="slide-content">
+                    <h2>Temukan Gaya Unikmu</h2>
+                    <p>Koleksi terbaik baju thrift berkualitas dengan harga terjangkau</p>
+                    <a href="#" class="slide-btn">Belanja Sekarang</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://placehold.co/1920x1080/f5f5f2/d9b48f?text=Diskon+Hingga+50%25')">
+                <div class="slide-content">
+                    <h2>Diskon Spesial</h2>
+                    <p>Potongan harga hingga 50% untuk produk terpilih</p>
+                    <a href="#" class="slide-btn">Lihat Promo</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://placehold.co/1920x1080/f5f5f2/e85a4f?text=Produk+Preloved+Berkualitas')">
+                <div class="slide-content">
+                    <h2>Preloved Berkualitas</h2>
+                    <p>Baju second dengan kualitas terbaik yang telah kami seleksi</p>
+                    <a href="#" class="slide-btn">Jelajahi Koleksi</a>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <div class="slider-control active" data-index="0"></div>
+            <div class="slider-control" data-index="1"></div>
+            <div class="slider-control" data-index="2"></div>
+        </div>
+    </section>
+
+    <!-- Running Text -->
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>🔥 PROMO KHUSUS HARI INI - POTONGAN HARGA 20% UNTUK PEMBELIAN DI ATAS Rp200.000 | 📦 GRATIS ONGKIR KE SELURUH INDONESIA DENGAN MINIMAL PEMBELIAN Rp300.000 | 💳 PEMBAYARAN AMAN MELALUI BANK TRANSFER, GOPAY, OVO, DANA, DAN SHOPEEPAY</span>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    
+    <section class="container">
+    <h2 class="section-title">Produk Unggulan</h2>
+    <div class="products" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <!-- Produk #1 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/cn knitwaer.jpeg" alt="Crewneck knitwear" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Crewneck Knitwear</h3>
+                <p class="product-description">Crewneck knitwear klasik cocok untuk gaya kasual.</p>
+                <p class="product-price">Rp150.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="1" data-name="Crewneck Knitwear" data-price="150000" data-image="IMG/cn knitwaer.jpeg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #2 -->
+         
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/cn knitwaer 1.jpeg" alt="Crewneck belang" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Crewneck Belang</h3>
+                <p class="product-description">Crewneck belang nyaman dipakai seharian.</p>
+                <p class="product-price">Rp120.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="2" data-name="Crewneck Belang" data-price="120000" data-image="IMG/cn knitwaer 1.jpeg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #3 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/Crewneck knitwear 2.jpeg" alt="Graphic Retro" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Graphic Retro</h3>
+                <p class="product-description">Crewneck dengan motif grafis retro.</p>
+                <p class="product-price">Rp175.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="3" data-name="Graphic Retro" data-price="175000" data-image="IMG/Crewneck knitwear 2.jpeg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #4 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/Crewneck knitwear cardigan.jpeg" alt="Cardigan Knitwear" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Cardigan Knitwear</h3>
+                <p class="product-description">Cardigan knitwear premium dengan bahan nyaman.</p>
+                <p class="product-price">Rp135.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="4" data-name="Cardigan Knitwear" data-price="135000" data-image="IMG/Crewneck knitwear cardigan.jpeg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #5 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/cn knitwaer 3.jpeg" alt="Sweater Hitam" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Crewneck knitwear Hijau Belang/h3>
+                <p class="product-description">Crewneck knitwear Hijau Belang basic cocok untuk cuaca dingin dan santai..</p>
+                <p class="product-price">Rp165.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="5" data-name="Sweater Hitam" data-price="95000" data-image="IMG/product5.jpg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #6 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/celana k.jpeg" alt="Hoodie Basic" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Celana Levis knitwear Gombrong</h3>
+                <p class="product-description">Celana Levis knitwear kekinian, cocok untuk remaja & dewasa muda.</p>
+                <p class="product-price">Rp160.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="6" data-name="Hoodie Basic" data-price="110000" data-image="IMG/product6.jpg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #7 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/celana knitwear hitam.jpeg" alt="Crewneck Merah" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Celana Knitwear Hitam</h3>
+                <p class="product-description">knitwear Coklat motif hitam pekat, elegan dan bahan adem..</p>
+                <p class="product-price">Rp170.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="7" data-name="Crewneck Merah" data-price="100000" data-image="IMG/product7.jpg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #8 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/celana chino.jpeg" alt="Sweater V-Neck" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Celana Chino Knitwear</h3>
+                <p class="product-description">Celana Chino knitwear bahan tebal, desain klasik anak muda</p>
+                <p class="product-price">Rp180.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="8" data-name="Sweater V-Neck" data-price="125000" data-image="IMG/product8.jpg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #9 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/celana knitwaer coklat.jpeg" alt="Vintage Jacket" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Celana knitwear Coklat</h3>
+                <p class="product-description">Celana knitwear Coklat dengan motif garis elegan dan bahan adem..</p>
+                <p class="product-price">Rp145.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="9" data-name="Vintage Jacket" data-price="185000" data-image="IMG/product9.jpg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+        <!-- Produk #10 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="IMG/celana.jpeg" alt="Sweater Stripe" style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Celana Levis knitwear</h3>
+                <p class="product-description">Celana Levis knitwear kekinian, cocok untuk remaja & dewasa muda..</p>
+                <p class="product-price">Rp195.000</p>
+                <a href="#" class="product-btn add-to-cart" data-id="10" data-name="Sweater Stripe" data-price="115000" data-image="IMG/product10.jpg">Tambah ke Keranjang</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+    <!-- About Section -->
+    <section class="about" id="about">
+    <div class="container">
+        <h2 class="section-title">Tentang Kami</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="IMG/images.jpeg" alt="Tim ThriftStyle sedang memeriksa kualitas baju thrift di gudang">
+            </div>
+            <div class="about-text">
+                <h3>ThriftStyle - Membawa Gaya ke Masa Depan</h3>
+                <p>ThriftStyle adalah UMKM yang berfokus pada penjualan pakaian thrift berkualitas tinggi. Kami percaya bahwa fashion seharusnya tidak selalu harus baru, tetapi harus berkelanjutan dan memiliki nilai.</p>
+                <p>Setiap produk yang kami jual telah melalui proses seleksi ketat untuk memastikan kualitasnya. Kami membersihkan, memperbaiki, dan menyortir setiap item sebelum dijual kepada pelanggan kami.</p>
+                
+                <!-- Link Sosial Media -->
+                <div class="social-media flex space-x-3 mt-4">
+                    <a href="https://www.instagram.com/akunmu" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/akunmu" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://wa.me/+6289517069389" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.tiktok.com/@akunmu" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://shopee.co.id/thriftstyle.id" target="_blank">
+                        <img src="https://img.icons8.com/ios-filled/30/ee4d2d/shopee.png" alt="Shopee" style="display:inline-block; vertical-align:middle;">
+                    </a>
+                </div> 
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Info Kontak</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Thrift No. 123, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> +62 812 3456 7890</p>
+                    <p><i class="fas fa-envelope"></i> info@thriftstyle.com</p>
+                    <p><i class="fas fa-clock"></i> Buka setiap hari: 09:00 - 21:00 WIB</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form id="form-contact">
+                        <input type="text" placeholder="Nama Anda" required>
+                        <input type="email" placeholder="Email Anda" required>
+                        <input type="text" placeholder="Subjek">
+                        <textarea rows="4" placeholder="Pesan Anda" required></textarea>
+                        <button type="submit">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">good<span>vibs</span></div>
+                    <p>Toko thrift online yang menyediakan berbagai macam pakaian bekas berkualitas untuk semua kalangan.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="#">Beranda</a></li>
+                        <li><a href="#">Produk</a></li>
+                        <li><a href="#about">Tentang Kami</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Kategori</h4>
+                    <ul>
+                        <li><a href="#">Pria</a></li>
+                        <li><a href="#">Wanita</a></li>
+                        <li><a href="#">Anak</a></li>
+                        <li><a href="#">Aksesoris</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Pembayaran</h4>
+                    <div class="payment-methods">
+                        <img src="https://placehold.co/60x40/f5f5f2/4a6f7f?text=BRI" alt="Logo Bank BRI">
+                        <img src="https://placehold.co/60x40/f5f5f2/d9b48f?text=BCA" alt="Logo Bank BCA">
+                        <img src="https://placehold.co/60x40/f5f5f2/e85a4f?text=OVO" alt="Logo OVO">
+                        <img src="https://placehold.co/60x40/f5f5f2/4a6f7f?text=DANA" alt="Logo DANA">
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 ThriftStyle.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-header">
+            <h3>Keranjang Belanja</h3>
+            <span class="close-cart" id="close-cart">&times;</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here dynamically -->
+        </div>
+        <div class="cart-total">
+            Total: Rp<span id="cart-total">0</span>
+        </div>
+        <button class="checkout-btn" id="checkout-btn">Proses Pembayaran</button>
+    </div>
+
+    <script>
+        // Slider Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.slider');
+            const slides = document.querySelectorAll('.slide');
+            const controls = document.querySelectorAll('.slider-control');
+            let currentSlide = 0;
+            
+            function goToSlide(index) {
+                slider.style.transform = `translateX(-${index * 33.33}%)`;
+                controls.forEach(control => control.classList.remove('active'));
+                controls[index].classList.add('active');
+                currentSlide = index;
+            }
+            
+            controls.forEach(control => {
+                control.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    goToSlide(index);
+                });
+            });
+            
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                goToSlide(currentSlide);
+            }, 5000);
+            
+            // Cart Functionality
+            const cartIcon = document.getElementById('cart-icon');
+            const cartModal = document.getElementById('cart-modal');
+            const overlay = document.getElementById('overlay');
+            const closeCart = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            
+            let cart = [];
+            
+            function updateCart() {
+                // Update cart count
+                const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelector('.cart-count').textContent = cartCount;
+                
+                // Update cart items display
+                cartItemsContainer.innerHTML = '';
+                
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>Keranjang belanja kosong</p>';
+                    cartTotalElement.textContent = '0';
+                    return;
+                }
+                
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <div class="cart-item-image">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <p class="cart-item-price">Rp${item.price}</p>
+                            <p>Kuantitas: ${item.quantity}</p>
+                            <p class="cart-item-remove" data-id="${item.id}">Hapus</p>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItemElement);
+                });
+                
+                // Update total
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartTotalElement.textContent = total.toLocaleString('id-ID');
+            }
+            
+            function addToCart(productId, productName, productPrice, productImage) {
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                
+                // Show notification or animation
+                const notification = document.createElement('div');
+                notification.textContent = `${productName} ditambahkan ke keranjang`;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.backgroundColor = 'var(--secondary-color)';
+                notification.style.color = 'white';
+                notification.style.padding = '10px 20px';
+                notification.style.borderRadius = '4px';
+                notification.style.zIndex = '1000';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 2000);
+            }
+            
+            // Event listeners
+            cartIcon.addEventListener('click', () => {
+                cartModal.style.display = 'block';
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeCart.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            overlay.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    const productName = this.getAttribute('data-name');
+                    const productPrice = parseInt(this.getAttribute('data-price'));
+                    const productImage = this.getAttribute('data-image');
+                    addToCart(productId, productName, productPrice, productImage);
+                });
+            });
+            
+            cartItemsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('cart-item-remove')) {
+                    const productId = e.target.getAttribute('data-id');
+                    cart = cart.filter(item => item.id !== productId);
+                    updateCart();
+                }
+            });
+            
+           checkoutBtn.addEventListener('click', function () {
+    if (cart.length === 0) {
+        alert('Keranjang belanja kosong');
+        return;
+    }
+
+    // Nomor WhatsApp tujuan (gunakan format internasional tanpa +)
+    const phoneNumber = '6281234567890'; // Ganti dengan nomor WA kamu
+
+    // Buat isi pesan
+    let message = 'Halo, saya ingin memesan produk berikut:%0A%0A';
+    cart.forEach(item => {
+        message += `• ${item.name} x${item.quantity} - Rp${(item.price * item.quantity).toLocaleString('id-ID')}%0A`;
+    });
+
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    message += `%0ATotal: Rp${total.toLocaleString('id-ID')}`;
+
+    // Buka WhatsApp
+    const waURL = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(waURL, '_blank');
+});
+
+        });
+    </script>
+<script>
+  const searchInput = document.getElementById("search");
+  const productCards = document.querySelectorAll(".product-card");
+
+  searchInput.addEventListener("input", function () {
+    const keyword = this.value.toLowerCase();
+
+    productCards.forEach(card => {
+      const name = card.querySelector(".product-name").textContent.toLowerCase();
+      if (name.includes(keyword)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+</script>
+
+
+
+
+
+</body>
+</html>
