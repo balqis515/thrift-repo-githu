@@ -1133,29 +1133,36 @@
                     updateCart();
                 }
             });
-            
-           checkoutBtn.addEventListener('click', function () {
+          checkoutBtn.addEventListener('click', function () {
     if (cart.length === 0) {
         alert('Keranjang belanja kosong');
         return;
     }
 
-    // Nomor WhatsApp tujuan (gunakan format internasional tanpa +)
-    const phoneNumber = '6281234567890'; // Ganti dengan nomor WA kamu
+    const phoneNumber = '6289517069389'; // Ganti dengan nomor kamu
 
-    // Buat isi pesan
     let message = 'Halo, saya ingin memesan produk berikut:%0A%0A';
     cart.forEach(item => {
-        message += `• ${item.name} x${item.quantity} - Rp${(item.price * item.quantity).toLocaleString('id-ID')}%0A`;
+        const name = encodeURIComponent(item.name);
+        const quantity = item.quantity;
+        const price = item.price * item.quantity;
+        message += `• ${name} x${quantity} - Rp${price.toLocaleString('id-ID')}%0A`;
     });
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     message += `%0ATotal: Rp${total.toLocaleString('id-ID')}`;
 
-    // Buka WhatsApp
-    const waURL = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(waURL, '_blank');
+    const encodedMessage = encodeURIComponent(message);
+
+    // Deteksi perangkat
+    const isMobile = /iPhone|Android|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const waUrl = isMobile
+        ? `https://wa.me/${phoneNumber}?text=${encodedMessage}`
+        : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+    window.open(waUrl, '_blank');
 });
+
 
         });
     </script>
