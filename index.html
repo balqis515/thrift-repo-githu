@@ -664,10 +664,310 @@
             
             <!-- Search Bar -->
 <!-- Search Bar -->
-<input type="text" id="search" placeholder="Cari produk..." style="padding: 10px; width: 300px; font-size: 16px; margin-bottom: 20px;">
-<!-- Hasil Produk -->
-<div id="productList"></div>
+ <!-- Search Bar -->
+<div class="container mx-auto py-8 px-4">
+  <div class="relative max-w-2xl mx-auto">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Cari sparepart (contoh: Oli, Kampas Rem, V Belt...)"
+      class="w-full px-6 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+    />
+    <button id="clearSearch" class="absolute right-20 top-4 text-gray-400 hover:text-gray-600 hidden">
+      ✕
+    </button>
+    <button
+      id="searchButton"
+      class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
+    >
+      Cari
+    </button>
+    <div id="searchResults"
+         class="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl max-h-[70vh] overflow-y-auto z-50 hidden"></div>
+  </div>
+</div>
 
+<!-- Hasil Pencarian -->
+<div id="resultsContainer" class="container mx-auto px-4 py-8 hidden">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">Hasil Pencarian</h2>
+  <div id="filteredProducts"
+       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+</div>
+
+
+    <!-- Tombol Back to Top -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition hidden">
+        ↑
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ✅ Data Produk Sparepart
+            const produkData = [
+                {
+                    name: "Crewneck knitwear",
+                    category: "belt",
+                    description: "V belt original untuk motor matic",
+                    image: "IMG/_knitwaer.jpeg",
+                    price: "Rp Rp 126.550",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Roller YSP Mio J",
+                    category: "roller",
+                    description: "Roller original untuk Yamaha Mio J",
+                    image: "IMG/roller.jpeg",
+                    price: "Rp 22.500",
+                    rating: 4,
+                    reviews: 98
+                },
+                {
+                    name: "Oli Shell AX7 Matic 10W-40",
+                    category: "oli",
+                    description: "Oli mesin full synthetic untuk matic",
+                    image: "IMG/oli_shell.jpeg",
+                    price: "Rp 62.987",
+                    rating: 5,
+                    reviews: 75
+                },
+                {
+                    name: "Karbu Cleaner 500ml",
+                    category: "cleaner",
+                    description: "Pembersih karburator dan injektor",
+                    image: "IMG/karbu_cleaner.jpeg",
+                    price: "Rp 20.350",
+                    rating: 5,
+                    reviews: 210
+                },
+                {
+                    name: "Kampas Rem Depan Mio",
+                    category: "kampas",
+                    description: "Kampas rem depan untuk Yamaha Mio",
+                    image: "IMG/kampas_rem_mio.jpeg",
+                    price: "Rp 14.550",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Oli Motul Motor Oil LE 10W-30",
+                    category: "oli",
+                    description: "Oli mesin motor berkualitas tinggi",
+                    image: "IMG/oli_motul.jpeg",
+                    price: "Rp 59.550",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Seal Kruk As Beat ESP",
+                    category: "seal",
+                    description: "Seal kruk as untuk Honda Beat ESP",
+                    image: "IMG/seal_kruk.jpeg",
+                    price: "Rp 9.350",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Seal As Pully NMAX",
+                    category: "seal",
+                    description: "Seal as pully untuk Yamaha NMAX",
+                    image: "IMG/seal_as_pully.jpeg",
+                    price: "Rp 9.547",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Oli Enduro Matic S 10W-30",
+                    category: "oli",
+                    description: "Oli enduro untuk motor matic",
+                    image: "IMG/oli_enduro.jpeg",
+                    price: "Rp 37.690",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Oli MPX 2 10W-30",
+                    category: "oli",
+                    description: "Oli matic untuk motor Honda",
+                    image: "IMG/oli_mpx.jpeg",
+                    price: "Rp 49.538",
+                    rating: 5,
+                    reviews: 125
+                }
+            ];
+
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const searchResults = document.getElementById('searchResults');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const filteredProducts = document.getElementById('filteredProducts');
+            const backToTop = document.getElementById('backToTop');
+            const clearSearch = document.getElementById('clearSearch');
+
+            // Format rating bintang
+            function renderRating(rating) {
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= rating ? '★' : '☆';
+                }
+                return `<span class="text-yellow-400">${stars}</span>`;
+            }
+
+            // Tampilkan hasil pencarian
+            function showSearchResults(query) {
+                const normalizedQuery = query.toLowerCase().trim();
+                
+                if (!normalizedQuery) {
+                    searchResults.classList.add('hidden');
+                    resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                const results = produkData.filter(item => 
+                    item.name.toLowerCase().includes(normalizedQuery) ||
+                    item.description.toLowerCase().includes(normalizedQuery) ||
+                    item.category.toLowerCase().includes(normalizedQuery)
+                );
+
+                searchResults.innerHTML = '';
+                
+                if (results.length > 0) {
+                    results.slice(0, 5).forEach(item => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'p-4 border-b border-gray-100 hover:bg-blue-50 cursor-pointer flex gap-3 items-center';
+                        resultItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-contain rounded-md">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-medium truncate">${item.name}</h4>
+                                <p class="text-sm text-gray-600 truncate">${item.description}</p>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-blue-600 font-medium">${item.price}</span>
+                                    ${renderRating(item.rating)}
+                                </div>
+                            </div>
+                        `;
+                        resultItem.addEventListener('click', () => {
+                            searchInput.value = item.name;
+                            performSearch();
+                        });
+                        searchResults.appendChild(resultItem);
+                    });
+
+                    if (results.length > 5) {
+                        const moreResults = document.createElement('div');
+                        moreResults.className = 'p-3 text-center text-blue-600 font-medium bg-gray-50 rounded-b-xl';
+                        moreResults.textContent = `+${results.length - 5} produk lainnya...`;
+                        searchResults.appendChild(moreResults);
+                    }
+
+                    searchResults.classList.remove('hidden');
+                } else {
+                    searchResults.innerHTML = `
+                        <div class="p-4 text-center text-gray-500">
+                            Produk tidak ditemukan. Coba kata kunci lain.
+                        </div>
+                    `;
+                    searchResults.classList.remove('hidden');
+                }
+            }
+
+            // Tampilkan produk yang difilter
+            function showFilteredProducts(query) {
+                const normalizedQuery = query.toLowerCase().trim();
+                
+                if (!normalizedQuery) {
+                    resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                const results = produkData.filter(item => 
+                    item.name.toLowerCase().includes(normalizedQuery) ||
+                    item.description.toLowerCase().includes(normalizedQuery) ||
+                    item.category.toLowerCase().includes(normalizedQuery)
+                );
+
+                filteredProducts.innerHTML = '';
+
+                if (results.length > 0) {
+                    results.forEach(item => {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card bg-white rounded-lg shadow-md p-4 flex flex-col';
+                        productCard.innerHTML = `
+                            <div class="relative overflow-hidden rounded-lg mb-3 h-40 bg-gray-100">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain p-2">
+                            </div>
+                            <h3 class="font-semibold text-lg mb-1 truncate">${item.name}</h3>
+                            <p class="text-gray-600 text-sm mb-2 line-clamp-2">${item.description}</p>
+                            <div class="flex items-center mb-2">
+                                ${renderRating(item.rating)}
+                                <span class="text-gray-500 text-sm ml-2">(${item.reviews})</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="text-lg font-bold text-blue-700 mb-3">${item.price}</div>
+                                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                                    Tambah ke Keranjang
+                                </button>
+                            </div>
+                        `;
+                        filteredProducts.appendChild(productCard);
+                    });
+
+                    resultsContainer.classList.remove('hidden');
+                    window.scrollTo({
+                        top: resultsContainer.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    resultsContainer.classList.add('hidden');
+                }
+            }
+
+            // Fungsi pencarian utama
+            function performSearch() {
+                const query = searchInput.value.trim();
+                showSearchResults(query);
+                showFilteredProducts(query);
+                clearSearch.style.display = query ? 'block' : 'none';
+                resultsContainer.classList.toggle('hidden', !query);
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', () => {
+                showSearchResults(searchInput.value);
+                clearSearch.style.display = searchInput.value.trim() ? 'block' : 'none';
+            });
+
+            searchButton.addEventListener('click', performSearch);
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            clearSearch.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.focus();
+                clearSearch.style.display = 'none';
+                searchResults.classList.add('hidden');
+                resultsContainer.classList.add('hidden');
+            });
+
+            window.addEventListener('scroll', () => {
+                backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 
             
             <nav>
@@ -886,7 +1186,7 @@
                 
                 <!-- Link Sosial Media -->
                 <div class="social-media flex space-x-3 mt-4">
-                    <a href="https://www.instagram.com/akunmu" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/goodvibs.market?igsh=MXB0a28yYnduemN3cQ==" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://facebook.com/akunmu" target="_blank"><i class="fab fa-facebook"></i></a>
                     <a href="https://wa.me/+6289517069389" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://www.tiktok.com/@akunmu" target="_blank"><i class="fab fa-tiktok"></i></a>
@@ -906,7 +1206,7 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <h3>Info Kontak</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Jl. Thrift No. 123, Jakarta</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. depok</p>
                     <p><i class="fas fa-phone"></i> +62 812 3456 7890</p>
                     <p><i class="fas fa-envelope"></i> info@thriftstyle.com</p>
                     <p><i class="fas fa-clock"></i> Buka setiap hari: 09:00 - 21:00 WIB</p>
