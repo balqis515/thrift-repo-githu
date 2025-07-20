@@ -1,0 +1,44 @@
+.btn-kembali {
+  display: inline-block;
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: #2c3e50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-kembali:hover {
+  background-color: #34495e;
+}
+
+.hero {
+  overflow: hidden;
+}
+
+/* Hilangkan latar belakang pada tombol */
+.slide-btn {
+  background-color: transparent !important;
+  border: 2px solid white; /* opsional agar tetap terlihat */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover efek tetap elegan */
+.slide-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* transparan saat hover */
+}
+
+/* Pastikan teks tidak punya background */
+.slide h2,
+.slide p {
+  background-color: transparent !important;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6); /* agar tetap terbaca di atas gambar */
+}
