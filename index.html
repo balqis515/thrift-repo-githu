@@ -689,22 +689,125 @@
 </div>
 
 <!-- Hasil Pencarian -->
-<!-- Hasil Pencarian -->
-<div id="resultsContainer" class="hidden container mx-auto px-4 py-8">
-  <h2 class="text-2xl font-bold mb-6 text-gray-800">Hasil Pencarian</h2>
-
-  <div id="filteredProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-
-  <div class="mt-8">
-    <a href="index.html"
-       class="inline-block px-6 py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 transition">
-      ← Kembali ke Beranda
-    </a>
+<!-- Header Hasil Pencarian -->
+  <div id="search-result-header" style="display: none; padding: 20px;">
+    <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">Hasil Pencarian</h1>
+    <a href="index.html" style="color: purple; text-decoration: underline;">&larr; Kembali ke Beranda</a>
   </div>
-</div>
+
+  <!-- Container Hasil Pencarian -->
+  <div id="resultsContainer" class="container mx-auto px-4 py-8 hidden">
+    <div id="filteredProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Produk hasil pencarian akan muncul di sini -->
+    </div>
+  </div>
+
+  <!-- Produk Dummy -->
+  <script>
+    const produkData = [
+      {
+        name: "Crewneck Knitwear",
+        image: "IMG/cn_knitwaer.jpeg",
+        description: "Crewneck knitwear klasik cocok untuk gaya kasual.",
+        price: "Rp150.000"
+      },
+      {
+        name: "Crewneck Belang",
+        image: "IMG/cn_nitwaer_1.jpeg",
+        description: "Crewneck belang nyaman dipakai seharian.",
+        price: "Rp120.000"
+      },
+      {
+        name: "Graphic Retro",
+        image: "IMG/Crewneck_knitwear_2.jpeg",
+        description: "Crewneck dengan motif grafis retro.",
+        price: "Rp175.000"
+      },
+      {
+        name: "Cardigan Knitwear",
+        image: "IMG/Crewneck_knitwear_cardigan.jpeg",
+        description: "Cardigan knitwear premium dengan bahan nyaman.",
+        price: "Rp135.000"
+      },
+      {
+        name: "Crewneck knitwear Hijau Belang",
+        image: "IMG/cn_knitwaer_3.jpeg",
+        description: "Crewneck knitwear Hijau Belang basic cocok untuk cuaca dingin dan santai...",
+        price: "Rp165.000"
+      },
+       {
+        name: "Celana Levis knitwear Gombrong",
+        image: "IMG/celana_levis.jpeg",
+        description: "Celana Levis knitwear kekinian, cocok untuk remaja & dewasa muda..",
+        price: "Rp160.000"
+      },
+      {
+        name: "Celana Knitwear Hitam",
+        image: "IMG/celana_levis.jpeg",
+        description: "knitwear Coklat motif hitam pekat, elegan dan bahan adem...",
+        price: "Rp170.000"
+      },
+       {
+        name: "Celana Chino Knitwear",
+        image: "IMG/celana_chino.jpeg",
+        description: "Celana Chino knitwear bahan tebal, desain klasik anak muda",
+        price: "Rp180.000"
+      },
+       {
+        name: "Celana Chino Coklat",
+        image: "IMG/celana_knitwaer_coklat.jpeg",
+        description: "Celana Chino knitwear bahan tebal, desain klasik anak muda",
+        price: "Rp180.000"
+      },
+      {
+        name: "Celana Levis knitwear",
+        image: "IMG/celana_levis.jpeg",
+        description: "Celana Levis knitwear kekinian, cocok untuk remaja & dewasa muda..",
+        price: "Rp195.000"
+      },
 
 
+    ];
+  </script>
 
+  <!-- Script Pencarian -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const resultsContainer = document.getElementById("resultsContainer");
+      const header = document.getElementById("search-result-header");
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = urlParams.get("search");
+
+      if (query) {
+        const filtered = produkData.filter(p =>
+          p.name.toLowerCase().includes(query.toLowerCase())
+        );
+
+        const container = document.getElementById("filteredProducts");
+        if (filtered.length > 0) {
+          container.innerHTML = "";
+          filtered.forEach(item => {
+            container.innerHTML += `
+              <div class="bg-white rounded-lg shadow p-4">
+                <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover rounded mb-3">
+                <h3 class="text-lg font-semibold">${item.name}</h3>
+                <p class="text-gray-600">${item.description}</p>
+                <p class="text-blue-700 font-bold mt-2">${item.price}</p>
+              </div>
+            `;
+          });
+        } else {
+          container.innerHTML = "<p>Produk tidak ditemukan.</p>";
+        }
+
+        resultsContainer.classList.remove("hidden");
+        if (header) header.style.display = "block";
+      } else {
+        resultsContainer.classList.add("hidden");
+        if (header) header.style.display = "none";
+      }
+    });
+  </script>
     <!-- Tombol Back to Top -->
     <button id="backToTop" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition hidden">
         ↑
@@ -713,7 +816,7 @@
     <script>
 
  document.addEventListener('DOMContentLoaded', function() {
-            // ✅ Data Produk Sparepart
+            // ✅ Data Produk S
             const produkData = [
                 {
                     name: "Crewneck Knitwear",
@@ -1021,7 +1124,7 @@
         <p>Koleksi terbaik baju thrift berkualitas dengan harga terjangkau</p>
       </div>
     </div>
-    <div class="slide" style="background-image: url('IMG/model 2.jpeg')">
+    <div class="slide" style="background-image: url('IMG/mdl.jpeg')">
       <!-- Hapus elemen kosong -->
     </div>
     <div class="slide" style="background-image: url('IMG/model 3.jpeg')">
@@ -1105,7 +1208,7 @@
                 <img src="IMG/cn_knitwaer_3.jpeg" alt="Sweater Hitam" style="width: 100%; height: 250px; object-fit: cover;">
             </div>
             <div class="product-info">
-                <h3 class="product-title">Crewneck knitwear Hijau Belang/h3>
+                <h3 class="product-title">Crewneck knitwear Hijau Belang</h3>
                 <p class="product-description">Crewneck knitwear Hijau Belang basic cocok untuk cuaca dingin dan santai..</p>
                 <p class="product-price">Rp165.000</p>
                 <a href="#" class="product-btn add-to-cart" data-id="5" data-name="Sweater Hitam" data-price="95000" data-image="IMG/product5.jpg">Tambah ke Keranjang</a>
@@ -1548,6 +1651,69 @@
 
 
   function performSearch() {
+  const query = searchInput.value.trim();
+  if (query) {
+    window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+  }
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const params = new URLSearchParams(window.location.search);
+  const hasQuery = params.has("search");
+  const header = document.getElementById("search-result-header");
+
+  if (hasQuery && header) {
+    header.style.display = "block";
+  } else if (header) {
+    header.style.display = "none";
+  }
+});
+
+
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const resultsContainer = document.getElementById("resultsContainer");
+  const header = document.getElementById("search-result-header"); // tambahkan ini
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get("search");
+
+  if (query) {
+    const produk = produkData;
+    const filtered = produk.filter(p =>
+      p.name.toLowerCase().includes(query.toLowerCase())
+    );
+
+    const container = document.getElementById("filteredProducts");
+    if (filtered.length > 0) {
+      container.innerHTML = "";
+      filtered.forEach(item => {
+        container.innerHTML += `
+          <div class="product-card">
+            <img src="${item.image}" alt="${item.name}" class="product-img">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p class="product-price">${item.price}</p>
+          </div>
+        `;
+      });
+    } else {
+      container.innerHTML = "<p>Produk tidak ditemukan.</p>";
+    }
+
+    resultsContainer.classList.remove("hidden");
+    if (header) header.style.display = "block"; // TAMPILKAN KEMBALI KE BERANDA
+  } else {
+    resultsContainer.classList.add("hidden");
+    if (header) header.style.display = "none"; // SEMBUNYIKAN
+  }
+});
+
+
+function performSearch() {
+  const searchInput = document.getElementById('searchInput'); // Sesuaikan id input
   const query = searchInput.value.trim();
   if (query) {
     window.location.href = `index.html?search=${encodeURIComponent(query)}`;
