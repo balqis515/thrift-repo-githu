@@ -665,28 +665,16 @@
             <!-- Search Bar -->
 <!-- Search Bar -->
  <!-- Search Bar -->
-<div class="container mx-auto py-8 px-4">
-  <div class="relative max-w-2xl mx-auto">
-    <input
-  type="text"
-  id="searchInput"
-  placeholder="Cari produk (misal: crewneck, celana, cardigan)"
-  class="w-full px-6 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-/>
+ <!-- Search Bar -->
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Cari produk...">
+            <button id="searchButton">Cari</button>
+        </div>
+    </div>
 
-    <button id="clearSearch" class="absolute right-20 top-4 text-gray-400 hover:text-gray-600 hidden">
-      ✕
-    </button>
-    <button
-      id="searchButton"
-      class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
-    >
-      Cari
-    </button>
-    <div id="searchResults"
-         class="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl max-h-[70vh] overflow-y-auto z-50 hidden"></div>
-  </div>
-</div>
+    <!-- Product Display -->
+    <div id="productDisplay" class="products"></div>
 
 <!-- Hasil Pencarian -->
 <!-- Header Hasil Pencarian -->
@@ -1091,21 +1079,28 @@
 
 
             
+            <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo"><span></span></a>
             <nav>
                 <ul>
                     <li><a href="#">Beranda</a></li>
                     <li>
                         <a href="#">Kategori</a>
                         <ul class="submenu">
-                            <li><a href="#">Pria</a></li>
-                            <li><a href="#">Wanita</a></li>
-                            <li><a href="#">Anak</a></li>
-                            <li><a href="#">Aksesoris</a></li>
+                            <li><a href="#" class="category" data-category="Crewneck">Crewneck</a></li>
+                            <li><a href="#" class="category" data-category="Cardigan">Cardigan</a></li>
+                            <li><a href="#" class="category" data-category="Celana">Celana</a></li>
                         </ul>
                     </li>
                     <li><a href="#about">Tentang Kami</a></li>
                     <li><a href="#contact">Kontak</a></li>
-                    <li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
                         <a href="#" class="cart-icon" id="cart-icon">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-count">0</span>
@@ -1719,7 +1714,9 @@ function performSearch() {
     window.location.href = `index.html?search=${encodeURIComponent(query)}`;
   }
 }
+ 
 
+ 
 </script>
 
 
